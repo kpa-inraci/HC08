@@ -19,8 +19,8 @@ void setup() {
 
   hc08.testAT();
   hc08.setName("MyHC08");
-  hc08.setPin("5678");
-  hc08.setBaudRate(9600); // Utiliser des valeurs de baudrate typiques directement
+ // hc08.setPin("5678");
+ // hc08.setBaudRate(9600); // Utiliser des valeurs de baudrate typiques directement
 }
 
 void loop() {
