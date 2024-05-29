@@ -4,29 +4,25 @@
 #include <Arduino.h>
 
 class Hc08Config {
-  public:
-    #if defined(__AVR__)
-      Hc08Config(int rxPin, int txPin);
-    #elif defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_SAMD)
-      Hc08Config(HardwareSerial& serialPort);
-      Hc08Config(HardwareSerial& serialPort, int rxPin, int txPin);
+public:
+    #if defined(__AVR__) || defined(ARDUINO_ARCH_ESP32)
+        Hc08Config(HardwareSerial& serial, int rxPin, int txPin);
+    #elif defined(ARDUINO_ARCH_SAMD)
+        Hc08Config(HardwareSerial& serial);
+    #else
+        #error "Unsupported architecture"
     #endif
 
     void begin(long baudRate);
-    void setName(const char* name);
-    void setPin(const char* pin);
-    void setBaudRate(long rate);
     void testAT();
+    void setName(const char* name);
+    // void setPin(const char* pin); // Uncomment if you need this
+    // void setBaudRate(long baudRate); // Uncomment if you need this
 
-  private:
-    Stream* btSerial;
-    #if defined(__AVR__)
-      SoftwareSerial* softwareSerial;
-    #elif defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_SAMD)
-      HardwareSerial* hardwareSerial;
-      int rxPin, txPin;
-    #endif
-    bool sendCommand(const char* command, const char* expectedResponse);
+private:
+    HardwareSerial* hardwareSerial;
+    int rxPin, txPin;
+    void sendCommand(const char* command, const char* expectedResponse);
 };
 
-#endif
+#endif // HC08CONFIG_H

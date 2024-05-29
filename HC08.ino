@@ -17,7 +17,7 @@ void setup() {
   hc08.begin(9600);
 
   hc08.testAT();
-  hc08.setName("MyHC08");
+  hc08.setName("Nom_de_mon"); //ATTENTION 12 caractères maximum.
  // hc08.setPin("5678");
  // hc08.setBaudRate(9600); // Utiliser des valeurs de baudrate typiques directement
 }
