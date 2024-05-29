@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "Hc08Config.h"
 
 #if defined(__AVR__)
@@ -6,7 +5,7 @@
 #elif defined(ARDUINO_ARCH_ESP32)
   Hc08Config hc08(Serial1, 16, 17); // RX, TX pour ESP32, remappable
 #elif defined(ARDUINO_ARCH_SAMD)
-  Hc08Config hc08(Serial1); // Utilise Serial1 pour SAMD21
+  Hc08Config hc08(Serial1); // Utilise Serial1 pour SAMD21 (Feather)
 #else
   #error "Unsupported architecture"
 #endif

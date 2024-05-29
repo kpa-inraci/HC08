@@ -7,11 +7,9 @@ class Hc08Config {
   public:
     #if defined(__AVR__)
       Hc08Config(int rxPin, int txPin);
-    #elif defined(ARDUINO_ARCH_ESP32)
+    #elif defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_SAMD)
       Hc08Config(HardwareSerial& serialPort);
       Hc08Config(HardwareSerial& serialPort, int rxPin, int txPin);
-    #else
-      Hc08Config(HardwareSerial& serialPort);
     #endif
 
     void begin(long baudRate);
@@ -24,11 +22,9 @@ class Hc08Config {
     Stream* btSerial;
     #if defined(__AVR__)
       SoftwareSerial* softwareSerial;
-    #else
+    #elif defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_SAMD)
       HardwareSerial* hardwareSerial;
-      #if defined(ARDUINO_ARCH_ESP32)
-        int rxPin, txPin;
-      #endif
+      int rxPin, txPin;
     #endif
     bool sendCommand(const char* command, const char* expectedResponse);
 };
