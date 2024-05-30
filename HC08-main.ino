@@ -10,18 +10,26 @@
   #error "Unsupported architecture"
 #endif
 
-void setup() {
+bool ledRun=0;
+void setup() 
+{
+ // delay(1000);  //laisse le temps de demarrer
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600); // Pour le moniteur série
   while (!Serial);
 
   hc08.begin(9600);
 
-  hc08.testAT();
-  hc08.setName("Nom_de_mon"); //ATTENTION 12 caractères maximum.
+
+  hc08.setName("Kapita"); //ATTENTION 12 caractères maximum.
  // hc08.setPin("5678");
  // hc08.setBaudRate(9600); // Utiliser des valeurs de baudrate typiques directement
 }
 
-void loop() {
-  // Reste du code du projet
+void loop() 
+{
+  ledRun=!ledRun;
+  digitalWrite(LED_BUILTIN, ledRun);  
+  delay(333);      
+
 }

@@ -22,11 +22,23 @@ void Hc08Config::begin(long baudRate) {
 
 void Hc08Config::sendCommand(const char* command, const char* expectedResponse) {
     hardwareSerial->println(command);
-    delay(100); // Wait for response
-    while (hardwareSerial->available()) {
-        String response = hardwareSerial->readString();
-        Serial.println(response); // Print response to Serial Monitor
+    unsigned long startTime = millis();
+    const unsigned long timeout = 500; // in millisecond timeout
+
+    while (millis() - startTime < timeout) {
+        if (hardwareSerial->available()) {
+            String response = hardwareSerial->readString();
+            Serial.print("response : "); // Print response to Serial Monitor
+            Serial.println(response); // Print response to Serial Monitor
+            if (response.indexOf(expectedResponse) != -1) {
+                return; // Expected response received, exit function
+            }
+        }
     }
+
+    // If we reach here, it means the expected response was not received within the timeout period
+    Serial.print("Error: No response or unexpected response received from -> command  ");
+    Serial.println(command);
 }
 
 void Hc08Config::testAT() {
