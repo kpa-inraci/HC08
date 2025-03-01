@@ -9,7 +9,9 @@ Hc08Config::Hc08Config(HardwareSerial& serial) : hardwareSerial(&serial) {}
 
 #endif
 
-void Hc08Config::begin(long baudRate) {
+void Hc08Config::begin(long baudRate) { 
+
+  
     #if defined(__AVR__)
         ((SoftwareSerial*)hardwareSerial)->begin(baudRate);
     #elif defined(ARDUINO_ARCH_ESP32)
